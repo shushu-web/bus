@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>バス停留場自動放送</title>
+</head>
+<body>
+    <h1>バス停留場自動放送</h1>
+
+    <!-- ルートの選択 -->
+    <label for="routeSelect">ルートを選択してください:</label>
+    <select id="routeSelect">
+        <option value="route1">上山町経由ネコ町行(入口駅始発)</option>
+        <option value="route2">ルート2</option>
+        <option value="route3">ルート3</option>
+    </select>
+
+    <!-- バス停リスト -->
+    <div id="busStops">
+        <!-- バス停1 -->
+        <div class="bus-stop" data-route="route1">
+            <h2>始発　入口駅</h2>
+            <p>本日もShuShuバスをご利用いただきまして誠にありがとうございます。このバスは、上山町経由、ネコ町行です。安全のため走行中は席に座るかお近くのつり革にお捕まりください。</p>
+            <button class="play-button" data-audio="r1-1.wav">再生</button>
+        </div>
+
+        <!-- バス停2 -->
+        <div class="bus-stop" data-route="route1">
+            <h2>上山町</h2>
+            <p>次は上山町バス停です。お降りのお客様は降車ボタンを押してお待ち下さい。</p>
+            <button class="play-button" data-audio="r1-2.wav">再生</button>
+        </div>
+
+        <div class="bus-stop" data-route="route1">
+            <h2>ShuShuSTATION　上山店前</h2>
+            <p>次はShuShuSTATION　上山店前バス停です。お降りのお客様は降車ボタンを押してお待ち下さい。</p>
+            <button class="play-button" data-audio="r1-3.wav">再生</button>
+        </div>
+
+        <div class="bus-stop" data-route="route1">
+            <h2>終点　ねこ町</h2>
+            <p>次はねこ町前バス停です。お降りのお客様は降車ボタンを押してお待ち下さい。</p>
+            <button class="play-button" data-audio="r1-4.wav">再生</button>
+        </div>
+
+        <!-- 他のバス停を同様に追加 -->
+    </div>
+
+    <!-- JavaScriptコード -->
+    <script>
+        // ボタンがクリックされたときの処理
+        const playButtons = document.querySelectorAll(".play-button");
+        playButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const audioFile = button.getAttribute("data-audio");
+                playAudio(audioFile);
+            });
+        });
+
+        // 音声ファイルを再生する関数
+        function playAudio(audioFile) {
+            const audio = new Audio(audioFile);
+            audio.play();
+        }
+
+        // ルートが選択されたときの処理
+        const routeSelect = document.getElementById("routeSelect");
+        routeSelect.addEventListener("change", function () {
+            const selectedRoute = routeSelect.value;
+            const busStops = document.querySelectorAll(".bus-stop");
+            busStops.forEach(busStop => {
+                const route = busStop.getAttribute("data-route");
+                if (route === selectedRoute) {
+                    busStop.style.display = "block";
+                } else {
+                    busStop.style.display = "none";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
